@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel de Pressão Arterial</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Acompanhamento pessoal</p>
+      <h1>Painel de Pressão Arterial</h1>
+      <p class="subtitle">Registre data, hora, pressão arterial, humor e observações.</p>
+    </div>
+    <button id="btnAtualizar" class="secondary">Atualizar dados</button>
+  </header>
+
+  <main class="layout">
+    <section class="card form-card">
+      <h2>Novo registro</h2>
+      <form id="formRegistro">
+        <label>
+          Data e hora
+          <input type="datetime-local" id="dataHora" required />
+        </label>
+
+        <div class="grid-2">
+          <label>
+            Sistólica
+            <input type="number" id="sistolica" min="50" max="260" placeholder="Ex.: 120" required />
+          </label>
+
+          <label>
+            Diastólica
+            <input type="number" id="diastolica" min="30" max="180" placeholder="Ex.: 80" required />
+          </label>
+        </div>
+
+        <label>
+          Batimentos por minuto — opcional
+          <input type="number" id="bpm" min="30" max="220" placeholder="Ex.: 72" />
+        </label>
+
+        <label>
+          Humor / estado geral
+          <select id="humor" required>
+            <option value="">Selecione</option>
+            <option value="Bem">Bem</option>
+            <option value="Normal">Normal</option>
+            <option value="Cansado">Cansado</option>
+            <option value="Estressado">Estressado</option>
+            <option value="Ansioso">Ansioso</option>
+            <option value="Com dor">Com dor</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </label>
+
+        <label>
+          Observação
+          <textarea id="observacao" rows="4" placeholder="Ex.: medi após exercício, após café, em repouso, antes de dormir..."></textarea>
+        </label>
+
+        <button type="submit" id="btnSalvar">Salvar registro</button>
+        <p id="mensagem" class="message"></p>
+      </form>
+    </section>
+
+    <section class="dashboard">
+      <div class="cards">
+        <article class="stat-card">
+          <span>Última medição</span>
+          <strong id="ultimaMedicao">—</strong>
+          <small id="ultimaData">—</small>
+        </article>
+
+        <article class="stat-card">
+          <span>Média geral</span>
+          <strong id="mediaGeral">—</strong>
+          <small>Sistólica / Diastólica</small>
+        </article>
+
+        <article class="stat-card">
+          <span>Total de registros</span>
+          <strong id="totalRegistros">0</strong>
+          <small>Histórico salvo na planilha</small>
+        </article>
+      </div>
+
+      <section class="card">
+        <div class="section-title">
+          <h2>Evolução da pressão</h2>
+          <p>Sistólica e diastólica por data/hora.</p>
+        </div>
+        <canvas id="graficoPressao"></canvas>
+      </section>
+
+      <section class="grid-2 charts-row">
+        <div class="card">
+          <div class="section-title">
+            <h2>Batimentos</h2>
+            <p>Quando informados.</p>
+          </div>
+          <canvas id="graficoBpm"></canvas>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>Humor</h2>
+            <p>Distribuição dos registros.</p>
+          </div>
+          <canvas id="graficoHumor"></canvas>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <section class="card table-card">
+    <div class="section-title">
+      <h2>Histórico</h2>
+      <p>Os registros mais recentes aparecem primeiro.</p>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Pressão</th>
+            <th>BPM</th>
+            <th>Humor</th>
+            <th>Observação</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tabelaRegistros">
+          <tr>
+            <td colspan="6">Nenhum registro carregado.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p>Este painel é apenas um registro pessoal de acompanhamento. A interpretação clínica deve ser feita por profissional de saúde.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
