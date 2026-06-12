@@ -1,6 +1,6 @@
 // Cole aqui a URL do Web App do Google Apps Script, terminada em /exec.
 // Use a URL da IMPLANTAÇÃO, não a URL do editor do Apps Script e nem a URL /dev.
-const APPS_SCRIPT_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0tYzbCXKwmW4VOW2Sb2x6H8dMWxuCRFoK13cTGvAdbKD7L-IOrOQF5HuatBGV7BUt-w/exec";
 
 const form = document.getElementById("formRegistro");
 const mensagem = document.getElementById("mensagem");
