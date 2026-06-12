@@ -12,7 +12,7 @@
     <div>
       <p class="eyebrow">Acompanhamento pessoal</p>
       <h1>Painel de Pressão Arterial</h1>
-      <p class="subtitle">Registre data, hora, pressão arterial, humor e observações.</p>
+      <p class="subtitle">Registre data, hora, pressão arterial, humor, observações e acompanhe a classificação automaticamente.</p>
     </div>
     <button id="btnAtualizar" class="secondary">Atualizar dados</button>
   </header>
@@ -20,6 +20,7 @@
   <main class="layout">
     <section class="card form-card">
       <h2>Novo registro</h2>
+
       <form id="formRegistro">
         <label>
           Data e hora
@@ -28,14 +29,18 @@
 
         <div class="grid-2">
           <label>
-            Sistólica
+            Sistólica — PAS
             <input type="number" id="sistolica" min="50" max="260" placeholder="Ex.: 120" required />
           </label>
 
           <label>
-            Diastólica
+            Diastólica — PAD
             <input type="number" id="diastolica" min="30" max="180" placeholder="Ex.: 80" required />
           </label>
+        </div>
+
+        <div id="classificacaoPreview" class="classification-preview neutra">
+          Informe PAS e PAD para ver a classificação.
         </div>
 
         <label>
@@ -76,6 +81,12 @@
         </article>
 
         <article class="stat-card">
+          <span>Classificação da última medição</span>
+          <strong id="ultimaClassificacao">—</strong>
+          <small>Com base na PAS e PAD</small>
+        </article>
+
+        <article class="stat-card">
           <span>Média geral</span>
           <strong id="mediaGeral">—</strong>
           <small>Sistólica / Diastólica</small>
@@ -107,10 +118,10 @@
 
         <div class="card">
           <div class="section-title">
-            <h2>Humor</h2>
-            <p>Distribuição dos registros.</p>
+            <h2>Classificações</h2>
+            <p>Distribuição das medições registradas.</p>
           </div>
-          <canvas id="graficoHumor"></canvas>
+          <canvas id="graficoClassificacao"></canvas>
         </div>
       </section>
     </section>
@@ -128,6 +139,7 @@
           <tr>
             <th>Data/Hora</th>
             <th>Pressão</th>
+            <th>Classificação</th>
             <th>BPM</th>
             <th>Humor</th>
             <th>Observação</th>
@@ -136,8 +148,35 @@
         </thead>
         <tbody id="tabelaRegistros">
           <tr>
-            <td colspan="6">Nenhum registro carregado.</td>
+            <td colspan="7">Nenhum registro carregado.</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card table-card">
+    <div class="section-title">
+      <h2>Critérios utilizados no painel</h2>
+      <p>Classificação aplicada automaticamente conforme a tabela de referência informada.</p>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Diastólica — PAD</th>
+            <th>Sistólica — PAS</th>
+            <th>Classificação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Menor que 85 mmHg</td><td>Menor que 130 mmHg</td><td><span class="badge normal">Normal</span></td></tr>
+          <tr><td>Entre 85 e 89 mmHg</td><td>Entre 130 e 139 mmHg</td><td><span class="badge limitrofe">Normal limítrofe</span></td></tr>
+          <tr><td>Entre 90 e 99 mmHg</td><td>Entre 140 e 159 mmHg</td><td><span class="badge leve">Hipertensão leve — estágio 1</span></td></tr>
+          <tr><td>Entre 100 e 109 mmHg</td><td>Entre 160 e 179 mmHg</td><td><span class="badge moderada">Hipertensão moderada — estágio 2</span></td></tr>
+          <tr><td>Maior ou igual a 110 mmHg</td><td>Maior ou igual a 180 mmHg</td><td><span class="badge grave">Hipertensão grave — estágio 3</span></td></tr>
+          <tr><td>Menor que 90 mmHg</td><td>Maior ou igual a 140 mmHg</td><td><span class="badge isolada">Hipertensão sistólica isolada</span></td></tr>
         </tbody>
       </table>
     </div>
